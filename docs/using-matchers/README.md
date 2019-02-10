@@ -74,3 +74,78 @@ test('zero', () => {
 ```
 
 ## 数値
+
+```js
+test('two plus two', () => {
+  const value = 2 + 2;
+  // 3より大きい
+  expect(value).toBeGreaterThan(3);
+  // 4より大きい、もしくは等価
+  expect(value).toBeGreaterThanOrEqual(4);
+  // 3より小さい
+  expect(value).toBeLessThan(5);
+  // 4より小さい、もしくは等価
+  expect(value).toBeLessThanOrEqual(4);
+
+  // 等価
+  expect(value).toBe(4);
+  expect(value).toEqual(4);
+});
+```
+
+テストを丸め誤差に依存させたくないため、浮動小数点の値が同一であるかを確認するには`toEqual`の代わりに`toBeCloseTo`を利用する。
+
+```js
+test('adding floating point number', () => {
+  const value = 0.1 + 0.2;
+  // 以下のように書くと丸め誤差が原因で期待通りに動作しない
+  // expect(value).toBe(0.3);
+  expect(value).toBeCloseTo(0.3);
+});
+```
+
+## 文字列
+
+`toMatch`で利用して、文字列に対して正規表現でマッチするか確認できる。
+
+```js
+test('there is no I in team', () => {
+  expect('team').not.toMatch(/I/);
+});
+
+test('but there is a "stop" in Christoph', () => {
+  expect('Christoph').toMatch(/stop/);
+});
+```
+
+## 配列
+
+`toContain`を利用して、配列に特定のアイテムが含まれているかどうかを確認できる。
+
+```js
+test('the shopping list has beer on it', () => {
+  const shoppingList = [
+    'diapers',
+    'kleenex',
+    'trash bags',
+    'paper towels',
+    'beer'
+  ];
+
+  expect(shoppingList).toContain('beer');
+});
+```
+
+## 例外
+
+`toThrow`を利用して、関数が呼び出されたときに例外が発生するかどうかを確認できる。
+
+```js
+function compileAndroidCode() {
+  throw new ConfigError('you are using the wrong JDK');
+}
+```
+
+## And more
+
+他の [matchers](https://jestjs.io/docs/en/expect) はリファレンスを参照。
