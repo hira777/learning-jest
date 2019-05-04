@@ -37,7 +37,9 @@ module.exports = {
 
 - moduleFileExtensions
 - transform
+- transformIgnorePatterns
 - moduleNameMapper
+- testMatch
 
 ### moduleFileExtensions
 
@@ -109,6 +111,12 @@ module.exports = {
 }
 ```
 
+### transformIgnorePatterns
+
+Default: `['/node_modules/']`
+
+正規表現にマッチしたパスに対してトランフォーマーを実行しない。
+
 ### moduleNameMapper
 
 Default: `null`
@@ -139,4 +147,14 @@ module.exports = {
 
 `<rootDir>`はJestの設定ファイル、もしくは`package.json`が存在するルートディレクトリ。
 
+### testMatch
 
+default: `[ "**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)" ]`
+
+Jestがテストファイルを検出するために使用するglobパターン。
+
+デフォルトの場合、以下が検出される。
+
+- `__tests__`ディレクトリ内の`.js`、`.jsx`、`.ts`および`.tsx`ファイルd
+- 拡張子が`.test`または`.spec`のファイル（`Component.test.js`や`Component.spec.js`など）
+- `test.js`、`spec.js`
