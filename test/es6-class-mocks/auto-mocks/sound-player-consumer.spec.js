@@ -1,8 +1,8 @@
-import SoundPlayer from '../../src/es6-class-mocks/sound-player';
-import SoundPlayerConsumer from '../../src/es6-class-mocks/sound-player-consumer';
+import SoundPlayer from '../../../src/es6-class-mocks/auto-mocks/sound-player';
+import SoundPlayerConsumer from '../../../src/es6-class-mocks/auto-mocks/sound-player-consumer';
 // SoundPlayerクラスのコンストラクタがモックになる
 // そのため、SoundPlayerConsumerで利用しているSoundPlayerもモックになる
-jest.mock('@/es6-class-mocks/sound-player');
+jest.mock('@/es6-class-mocks/auto-mocks/sound-player');
 
 beforeEach(() => {
   // すべてのインスタンスをクリアし、コンストラクタとすべてのメソッドを呼び出す。
