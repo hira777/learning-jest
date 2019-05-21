@@ -1,17 +1,18 @@
-// /src/es6-class-mocks/manual-mocks/__mocks__/sound-player.jsが存在するため、
-// それがモックとして利用される。
-import SoundPlayer, {
-  mockPlaySoundFile
-} from '../../../src/es6-class-mocks/manual-mocks/sound-player';
-import SoundPlayerConsumer from '../../../src/es6-class-mocks/manual-mocks/sound-player-consumer';
-// SoundPlayerクラスのコンストラクタがモックになる
-// そのため、SoundPlayerConsumerで利用しているSoundPlayerもモックになる
-jest.mock('../../../src/es6-class-mocks/manual-mocks/sound-player');
+import SoundPlayer from '../../../src/es6-class-mocks/auto-mocks/sound-player';
+import SoundPlayerConsumer from '../../../src/es6-class-mocks/auto-mocks/sound-player-consumer';
+
+const mockPlaySoundFile = jest.fn();
+// mock()の第2引数にはモジュールファクトリを渡せる。
+// モジュールファクトリはモックを返す関数のこと。
+jest.mock('../../../src/es6-class-mocks/auto-mocks/sound-player', () => {
+  return jest.fn().mockImplementation(() => {
+    return { playSoundFile: mockPlaySoundFile };
+  });
+});
 
 beforeEach(() => {
   // すべてのインスタンスをクリアし、コンストラクタとすべてのメソッドを呼び出す。
   SoundPlayer.mockClear();
-  mockPlaySoundFile.mockClear();
 });
 
 describe('Auto Mock', () => {
