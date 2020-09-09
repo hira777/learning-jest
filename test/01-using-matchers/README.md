@@ -12,7 +12,7 @@ test('two plus two is four', () => {
 });
 ```
 
-`.toBe(4)`が matcher であり、`expect(2 + 2)`が返す「expectation」オブジェクトからアクセスできる。
+`.toBe(4)`が matcher であり、`expect(2 + 2)`が返す`expectation`オブジェクトからアクセスできる。
 
 Jest を実行すれば、失敗した matcher を追跡し、エラーメッセージを表示する。
 
@@ -118,7 +118,7 @@ test('but there is a "stop" in Christoph', () => {
 });
 ```
 
-## 配列
+## 配列とイテラブル
 
 `toContain`を利用して、配列に特定のアイテムが含まれているかどうかを確認できる。
 
@@ -129,9 +129,10 @@ test('the shopping list has beer on it', () => {
     'kleenex',
     'trash bags',
     'paper towels',
-    'beer'
+    'beer',
   ];
 
+  // shoppingList に 'beer' が含まれていれば、テストは pass する
   expect(shoppingList).toContain('beer');
 });
 ```
@@ -142,10 +143,17 @@ test('the shopping list has beer on it', () => {
 
 ```js
 function compileAndroidCode() {
-  throw new ConfigError('you are using the wrong JDK');
+  throw new Error('you are using the wrong JDK');
 }
+
+test('compiling android goes as expected', () => {
+  // compileAndroidCode がエラーをスローする
+  expect(compileAndroidCode).toThrow();
+  // compileAndroidCode がスローしたコンストラクタは Error である
+  expect(compileAndroidCode).toThrow(Error);
+
+  // エラーメッセージがマッチするかテストできる
+  expect(compileAndroidCode).toThrow('you are using the wrong JDK');
+  expect(compileAndroidCode).toThrow(/JDK/);
+});
 ```
-
-## And more
-
-他の [matchers](https://jestjs.io/docs/en/expect) はリファレンスを参照。

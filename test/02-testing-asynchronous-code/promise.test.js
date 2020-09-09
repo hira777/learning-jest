@@ -1,4 +1,4 @@
-import { promise, promiseError } from '../src/promise';
+import { promise, promiseError } from '../../src/promise';
 
 describe('Promises', () => {
   test('the data is peanut butter', () => {

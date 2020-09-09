@@ -14,7 +14,7 @@ export default function fetchData(callback) {
 }
 ```
 
-以下のようなテストを書いても、`fetchData`の呼び出しが完了した時点でテストが完了する。
+以下のようなテストを書いても、`fetchData`の呼び出しが完了した時点で  テストが完了する。
 
 つまり、`callback`の呼び出しを待たずにテストが完了するためうまく動作しない。
 
@@ -30,7 +30,7 @@ test('the data is peanut butter', () => {
 
 上記のテストを正しく動作させるために、`done`を利用する。
 
-以下のように`done`を利用すれば、Jestが`callback`の呼び出しが完了するのを待つため、テストが成功する。
+以下のように`done`を利用すれば、Jest が`callback`の呼び出しが完了するのを待つため、テストが成功する。
 
 ```js
 test('the data is peanut butter', done => {
@@ -43,9 +43,32 @@ test('the data is peanut butter', done => {
 });
 ```
 
+### `done()`が実行されない場合
+
+`done()`が実行されない場合、テストはタイムアウトエラーで失敗する。
+
+また、`expect`が失敗した場合、エラーがスローされ、`done()`は呼び出されない。
+
+なぜテストが失敗したのかをログで確認したい場合は、以下のように`expect`を`try`で囲み、`catch`で`error`を`done`に渡す必要がある。
+
+```js
+test('the data is peanut butter', done => {
+  function callback(data) {
+    try {
+      expect(data).toBe('peanut butter');
+      done();
+    } catch (error) {
+      done(error);
+    }
+  }
+
+  fetchData(callback);
+});
+```
+
 ## Promises
 
-テストする関数がPromiseを返す関数であれば、以下のようにテストができる。
+テストする関数が Promise を返す関数であれば、以下のようにテストができる。
 
 ```js
 test('the data is peanut butter', () => {
@@ -55,9 +78,9 @@ test('the data is peanut butter', () => {
 });
 ```
 
-rejectされることを期待する場合、想定した回数のアサーションが呼ばれなかったことを確認するために`expect.assertions(1)`を追加する必要がある。
+reject されることを期待する場合、想定した回数のアサーションが呼ばれなかったことを確認するために`expect.assertions(1)`を追加する必要がある。
 
-これがないと、rejectされなかった場合にテストが失敗したと判定されない。
+これがないと、reject されなかった場合にテストが失敗したと判定されない。
 
 ```js
 test('the fetch fails with an error', () => {
@@ -68,7 +91,7 @@ test('the fetch fails with an error', () => {
 
 ## `.resolves`/`.rejects`
 
-以下のように`.resolves`と`.rejects`matchersを利用したテストもできる。
+以下のように`.resolves`と`.rejects`matchers を利用したテストもできる。
 
 ```js
 test('the data is peanut butter', () => {

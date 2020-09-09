@@ -71,18 +71,23 @@ test('the shopping list has beer on it', () => {
     'kleenex',
     'trash bags',
     'paper towels',
-    'beer'
+    'beer',
   ];
 
   expect(shoppingList).toContain('beer');
 });
 
-class ConfigError {}
 function compileAndroidCode() {
-  throw new ConfigError('you are using the wrong JDK');
+  throw new Error('you are using the wrong JDK');
 }
 
 test('compiling android goes as expected', () => {
+  // compileAndroidCode がエラーをスローする
   expect(compileAndroidCode).toThrow();
-  expect(compileAndroidCode).toThrow(ConfigError);
+  // compileAndroidCode がスローしたコンストラクタは Error である
+  expect(compileAndroidCode).toThrow(Error);
+
+  // エラーメッセージがマッチするかテストできる
+  expect(compileAndroidCode).toThrow('you are using the wrong JDK');
+  expect(compileAndroidCode).toThrow(/JDK/);
 });
