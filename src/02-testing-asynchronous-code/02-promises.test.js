@@ -1,4 +1,4 @@
-import { promise, promiseError } from '../../src/promise';
+import { promise, promiseError } from './promise';
 
 describe('Promises', () => {
   test('the data is peanut butter', () => {
@@ -8,6 +8,9 @@ describe('Promises', () => {
   });
 
   test('the fetch fails with an error', () => {
+    // アサーションが呼ばれた回数が１回であることを期待する
+    // promiseError が reject をしなかった場合、expect(e).toMatch('error') は実行されず
+    // アサーションが呼ばれた回数は０回なので、テストは失敗する。
     expect.assertions(1);
     return promiseError().catch(e => expect(e).toMatch('error'));
   });
@@ -37,5 +40,17 @@ describe('Async/Await', () => {
     } catch (e) {
       expect(e).toMatch('error');
     }
+  });
+});
+
+describe('Async/Await with .resolves/.rejects', () => {
+  test('the data is peanut butter', async () => {
+    expect.assertions(1);
+    await expect(promise()).resolves.toBe('peanut butter');
+  });
+
+  test('the fetch fails with an error', async () => {
+    expect.assertions(1);
+    await expect(promiseError()).rejects.toMatch('error');
   });
 });

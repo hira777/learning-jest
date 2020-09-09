@@ -2,14 +2,14 @@ export function promise() {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve('peanut butter');
-    }, 1000);
+    }, 100);
   });
 }
 
 export function promiseError() {
-  return new Promise((resolve, reject) => {
+  return new Promise((_, reject) => {
     setTimeout(() => {
       reject('error');
-    }, 1000);
+    }, 100);
   });
 }

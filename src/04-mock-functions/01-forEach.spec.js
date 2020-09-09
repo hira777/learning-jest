@@ -1,8 +1,9 @@
-import forEach from '@/mock-functions/forEach';
+import forEach from './forEach';
 
 test('forEach', () => {
-  // モック関数を生成する
+  // 戻り値が 42 + x のモック関数を生成する
   const mockCallback = jest.fn(x => 42 + x);
+
   forEach([0, 1], mockCallback);
 
   // モック関数が2回呼ばれたことを期待する
